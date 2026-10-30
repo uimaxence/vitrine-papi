@@ -78,6 +78,7 @@ Pour les tableaux : de face, à la lumière du jour, sans flash, si possible hor
 - `assets/styles.css` : toute la direction artistique.
 - `js/app.js` : navigation, défilement horizontal, transitions.
 - `data/paintings.json` : les tableaux.
+- `assets/img/atelier/` : les photos de la page À propos, en deux tailles (`nom.jpg` ≈ 1500 px et `nom-1000.jpg`). Les versions `…b` sont recadrées (et, pour `IMG_5491b`, la table retouchée) pour que La robe rayée, mise de côté, n'y apparaisse pas.
 - `assets/photo/` : les photos d'origine (HEIC/JPG), non utilisées par le site. Le projet est versionné sur GitHub (`uimaxence/vitrine-papi`, branche `main`).
 
 ## Images générées par IA (Fal, modèle Nano Banana 2.1 Edit)
