@@ -77,6 +77,12 @@ strong { font-weight: 600; }
 
 .app.is-detail .site-header { opacity: 0; pointer-events: none; }
 
+/* la signature de Christian (tracé dans index.html, #sig-fill), au-dessus de la présentation */
+.brand { display: grid; gap: 24px; max-width: 30em; }
+.sig-mark { display: block; width: 184px; }
+.sig-mark svg { display: block; width: 100%; height: auto; fill: var(--ink); }
+.sig-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
 .bio {
   max-width: 30em;
   font-size: 1.0625rem;
@@ -569,6 +575,37 @@ strong { font-weight: 600; }
 .reveal.in { opacity: 1; transform: none; }
 .about-center .about-text.reveal { transition-delay: 0.12s; }
 
+/* ---------- Intro : la signature s'écrit, puis le site arrive en fondu ---------- */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  cursor: pointer;
+}
+.intro-sig {
+  width: min(72vw, 460px);
+  height: auto;
+  fill: var(--ink);
+}
+/* chaque trait du masque se dévoile le long de son tracé (délais et durées en ligne, calculés d'après la longueur des traits) */
+.intro-sig mask path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 6.19;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: sig-draw linear forwards;
+}
+@keyframes sig-draw { to { stroke-dashoffset: 0; } }
+.intro-leave-active { transition: opacity 0.8s ease; }
+.intro-leave-to { opacity: 0; }
+
 /* ---------- Plein écran ---------- */
 
 .lightbox {
@@ -734,6 +771,8 @@ strong { font-weight: 600; }
     padding-top: 20px;
   }
   .seg { order: -1; width: 100%; }
+  .brand { gap: 18px; }
+  .sig-mark { width: 150px; }
   .bio { font-size: 1rem; }
 
   .view-gallery { height: auto; overflow: visible; padding-top: calc(var(--header-h) + 12px); }
@@ -800,4 +839,5 @@ strong { font-weight: 600; }
   .page-enter-from .back { transform: none; }
   .swap-next-enter-from, .swap-next-leave-to,
   .swap-prev-enter-from, .swap-prev-leave-to { transform: none; }
+  .intro-sig mask path { animation: none; stroke-dashoffset: 0; }
 }

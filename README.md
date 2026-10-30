@@ -37,6 +37,7 @@ Puis ouvrir http://localhost:8080.
 ```
 
 - `tags` : la ou les catégories du tableau (voir ci-dessous). Un dessin au crayon d'un visage a par exemple `["portraits", "dessins"]`.
+- Pour retirer un tableau du site sans le perdre, déplacer son objet de `paintings` vers la liste `en_attente` du même fichier (et inversement pour le réafficher).
 - `insitu` : le nom d'une image de mise en situation dans `assets/img/insitu/` (deux versions : `nom.jpg` ≈ 2000 px et `nom-1000.jpg`). Mettre `null` tant qu'il n'y en a pas : un mur neutre est affiché à la place.
 
 ## Catégories (le tri de la page d'accueil)
@@ -65,17 +66,23 @@ La liste `categories` en tête de `data/paintings.json` définit les boutons de 
 
 Pour les tableaux : de face, à la lumière du jour, sans flash, si possible hors du cadre (le verre fait des reflets). Pour la mise en situation : le tableau accroché, avec un bout de la pièce autour. Pour À propos : Christian à la table de l'atelier, les mains, les pinceaux, un tableau en cours.
 
+## La signature, le favicon et l'intro
+
+- `assets/img/signature.svg` : la signature de Christian, vectorisée à partir de la photo `assets/photo/signature/IMG_5561.jpg`. Son tracé est aussi copié dans `index.html` (`#sig-fill`) : il sert dans l'en-tête (au-dessus de la présentation) et dans l'intro.
+- `assets/img/favicon.svg` (+ `apple-touch-icon.png`) : les deux C de la signature, en clair sur carré sombre.
+- L'intro (la signature qui s'écrit, puis fondu vers le site) se joue une fois par session d'onglet, jamais si le visiteur a demandé moins d'animations ; un clic la passe. Sa durée est réglée dans `js/app.js` (`INTRO_MS`) et les délais de chaque trait sont dans `index.html` (bloc `<mask id="sig-mask">`). Pour la régénérer à partir d'une meilleure photo de signature, demander à Claude : la chaîne (binarisation, contours, squelette, favicon) est un script Python.
+
 ## Fichiers
 
 - `index.html` : les quatre gabarits (en-tête, galerie, fiche, à propos).
 - `assets/styles.css` : toute la direction artistique.
 - `js/app.js` : navigation, défilement horizontal, transitions.
 - `data/paintings.json` : les tableaux.
-- `assets/photo/` : les photos d'origine (HEIC), non utilisées par le site.
+- `assets/photo/` : les photos d'origine (HEIC/JPG), non utilisées par le site. Le projet est versionné sur GitHub (`uimaxence/vitrine-papi`, branche `main`).
 
 ## Images générées par IA (Fal, modèle Nano Banana 2.1 Edit)
 
-- `assets/img/tableaux/` : reproductions « propres » des 37 tableaux, générées à partir des photos de téléphone (reflets, verre, passe-partout et bords de cadre supprimés, lumière neutralisée, signatures conservées). Les 12 premiers viennent des photos du 26 octobre (recadrages gardés dans `assets/photo/recadrages/`), 18 autres et les nouvelles versions des trois baigneuses et du turban vert viennent des 77 photos du 29 octobre au matin, 5 des 7 photos du 29 octobre après-midi, et les 2 derniers (Les rythmes, Le banc rouge) des 2 photos du 30 octobre (tri des doublons dans `assets/photo/TRI.md`, photos retenues dans `assets/photo/tableaux-sources/`).
+- `assets/img/tableaux/` : reproductions « propres » des 38 tableaux (37 affichés, La robe rayée mise de côté), générées à partir des photos de téléphone (reflets, verre, passe-partout et bords de cadre supprimés, lumière neutralisée, signatures conservées). Les 12 premiers viennent des photos du 26 octobre (recadrages gardés dans `assets/photo/recadrages/`), 18 autres et les nouvelles versions des trois baigneuses et du turban vert viennent des 77 photos du 29 octobre au matin, 5 des 7 photos du 29 octobre après-midi, puis Les rythmes, Le banc rouge et Pois et zigzags des photos du 30 octobre (tri des doublons dans `assets/photo/TRI.md`, photos retenues dans `assets/photo/tableaux-sources/`).
 - `assets/img/insitu/` : mises en situation générées (tableau encadré dans un intérieur ou une salle de musée), une par tableau.
 - Pour un tableau photographié très de biais, redresser d'abord la photo (perspective) avant de l'envoyer au modèle, sinon il peut inverser ou réinterpréter la composition (cas des « Ombrelles »).
 - Pour régénérer : envoyer la photo du tableau au modèle avec la consigne « reproduction fidèle, uniquement les défauts photographiques retirés, garder la signature, ne pas inverser », puis « tableau encadré, cadre blanc fin et passe-partout, intérieur lumineux de magazine, 3:2 » en donnant la reproduction propre comme référence.

@@ -108,3 +108,10 @@ Deux tableaux nouveaux, aucun doublon (photo retenue → `tableaux-sources/`) :
 - `le-banc-rouge` ← IMG_4019.JPG
 
 Les 2 originaux sont rangés dans `doublons/`.
+
+## Lot du 30 octobre (matin, 2e) : 2 photos
+
+- `pois-et-zigzags` ← 599ffed4-0c86-4bf2-a316-34ed26504f56.JPG (nouveau tableau ; original rangé dans `doublons/`)
+- IMG_5561.jpg = photo de la signature de Christian, rangée dans `signature/`. Elle a servi à vectoriser la signature (`assets/img/signature.svg`, favicon `assets/img/favicon.svg`, intro du site).
+
+Mis de côté le même jour, à la demande de Maxence : `la-robe-rayee` (la fillette en robe rouge), déplacé dans `en_attente` de `data/paintings.json`. Ses images restent dans `assets/img/`.

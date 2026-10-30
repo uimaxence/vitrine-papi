@@ -578,6 +578,18 @@
       const components = { gallery: 'GalleryView', detail: 'DetailView', about: 'AboutView' };
       const viewComponent = computed(() => components[route.name]);
 
+      // Intro : la signature s'écrit (2.15 s, voir les délais dans index.html), petite pause, puis fondu (CSS).
+      // Une fois par session seulement, et pas si l'utilisateur préfère moins de mouvement.
+      const INTRO_MS = 2150 + 450;
+      const intro = ref(false);
+      try {
+        if (!REDUCED.matches && !sessionStorage.getItem('cc-intro')) {
+          intro.value = true;
+          sessionStorage.setItem('cc-intro', '1');
+        }
+      } catch (_) { /* stockage indisponible : pas d'intro */ }
+      if (intro.value) setTimeout(() => { intro.value = false; }, INTRO_MS);
+
       function onHash() {
         const next = parseHash();
         // Retour de la fiche vers la galerie : le tableau repart vers sa place dans la rangée.
@@ -638,7 +650,7 @@
         }
       });
 
-      return { route, store, viewComponent, beforeLeave, imgSrc };
+      return { route, store, viewComponent, beforeLeave, imgSrc, intro };
     }
   };
 

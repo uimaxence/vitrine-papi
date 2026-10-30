@@ -1,5 +1,5 @@
 {
-  "_readme": "Un objet par tableau. slug = identifiant unique utilisé dans l'URL (#/tableau/slug) ; title ; description (≈3 lignes) ; tags = liste d'identifiants de catégories (voir `categories` ci-dessous ; un tableau peut en avoir plusieurs) ; image = nom du fichier dans assets/img/tableaux/ (sans extension), en deux versions : image.jpg (≈1600 px) et image-800.jpg ; w/h = dimensions en pixels de la grande image ; insitu = nom du fichier de mise en situation dans assets/img/insitu/ (insitu.jpg ≈2000 px et insitu-1000.jpg), ou null tant qu'il n'y en a pas (un mur neutre est affiché à la place). `categories` = les filtres de la page d'accueil, dans l'ordre d'affichage (id = valeur utilisée dans tags, label = texte affiché) ; une catégorie sans tableau n'est pas affichée. Les titres et descriptions sont provisoires, à remplacer.",
+  "_readme": "Un objet par tableau. slug = identifiant unique utilisé dans l'URL (#/tableau/slug) ; title ; description (≈3 lignes) ; tags = liste d'identifiants de catégories (voir `categories` ci-dessous ; un tableau peut en avoir plusieurs) ; image = nom du fichier dans assets/img/tableaux/ (sans extension), en deux versions : image.jpg (≈1600 px) et image-800.jpg ; w/h = dimensions en pixels de la grande image ; insitu = nom du fichier de mise en situation dans assets/img/insitu/ (insitu.jpg ≈2000 px et insitu-1000.jpg), ou null tant qu'il n'y en a pas (un mur neutre est affiché à la place). `categories` = les filtres de la page d'accueil, dans l'ordre d'affichage (id = valeur utilisée dans tags, label = texte affiché) ; une catégorie sans tableau n'est pas affichée. Les titres et descriptions sont provisoires, à remplacer. `en_attente` = tableaux mis de côté pour l'instant : même format, ignorés par le site ; pour en afficher un, le déplacer dans `paintings`.",
   "categories": [
     {
       "id": "portraits",
@@ -321,6 +321,18 @@
       "insitu": "les-barques"
     },
     {
+      "slug": "pois-et-zigzags",
+      "title": "Pois et zigzags",
+      "description": "Des pois rouges sur un bleu, des zigzags roses sur un vert, une spirale, des pétales : une page de formes découpées, dans l'esprit de Matisse.",
+      "tags": [
+        "abstraits"
+      ],
+      "image": "pois-et-zigzags",
+      "w": 1295,
+      "h": 1600,
+      "insitu": "pois-et-zigzags"
+    },
+    {
       "slug": "le-beret-rouge",
       "title": "Le béret rouge",
       "description": "Un visage au béret rouge et au manteau orange, sur un fond vert franc.",
@@ -343,18 +355,6 @@
       "w": 1319,
       "h": 1600,
       "insitu": "cabines-sous-les-arbres"
-    },
-    {
-      "slug": "la-robe-rayee",
-      "title": "La robe rayée",
-      "description": "Une petite fille en robe rayée rouge et blanc, les bras grands ouverts, sur fond blanc.",
-      "tags": [
-        "portraits"
-      ],
-      "image": "robe-rayee",
-      "w": 1600,
-      "h": 1200,
-      "insitu": "la-robe-rayee"
     },
     {
       "slug": "les-carres",
@@ -476,6 +476,20 @@
       "w": 1200,
       "h": 1600,
       "insitu": "nature-morte-au-vase-bleu"
+    }
+  ],
+  "en_attente": [
+    {
+      "slug": "la-robe-rayee",
+      "title": "La robe rayée",
+      "description": "Une petite fille en robe rayée rouge et blanc, les bras grands ouverts, sur fond blanc.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "robe-rayee",
+      "w": 1600,
+      "h": 1200,
+      "insitu": "la-robe-rayee"
     }
   ]
 }
