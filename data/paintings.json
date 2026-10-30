@@ -1,0 +1,481 @@
+{
+  "_readme": "Un objet par tableau. slug = identifiant unique utilisé dans l'URL (#/tableau/slug) ; title ; description (≈3 lignes) ; tags = liste d'identifiants de catégories (voir `categories` ci-dessous ; un tableau peut en avoir plusieurs) ; image = nom du fichier dans assets/img/tableaux/ (sans extension), en deux versions : image.jpg (≈1600 px) et image-800.jpg ; w/h = dimensions en pixels de la grande image ; insitu = nom du fichier de mise en situation dans assets/img/insitu/ (insitu.jpg ≈2000 px et insitu-1000.jpg), ou null tant qu'il n'y en a pas (un mur neutre est affiché à la place). `categories` = les filtres de la page d'accueil, dans l'ordre d'affichage (id = valeur utilisée dans tags, label = texte affiché) ; une catégorie sans tableau n'est pas affichée. Les titres et descriptions sont provisoires, à remplacer.",
+  "categories": [
+    {
+      "id": "portraits",
+      "label": "Portraits"
+    },
+    {
+      "id": "bord-de-mer",
+      "label": "Bord de mer"
+    },
+    {
+      "id": "paysages",
+      "label": "Paysages"
+    },
+    {
+      "id": "natures-mortes",
+      "label": "Natures mortes"
+    },
+    {
+      "id": "abstraits",
+      "label": "Abstraits"
+    },
+    {
+      "id": "dessins",
+      "label": "Dessins au crayon"
+    }
+  ],
+  "paintings": [
+    {
+      "slug": "trois-baigneuses",
+      "title": "Trois baigneuses",
+      "description": "Trois femmes de dos, assises face à la mer, chacune sous son chapeau. Trois bandes de couleur suffisent : le ciel, l'eau, le sable.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "trois-baigneuses",
+      "w": 1600,
+      "h": 1290,
+      "insitu": "trois-baigneuses"
+    },
+    {
+      "slug": "turban-vert",
+      "title": "Le turban vert",
+      "description": "Un portrait de face, presque sans décor. Le turban vert et le col rouge encadrent un visage tout en lignes, cerné d'un simple filet vert.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "turban-vert",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "turban-vert"
+    },
+    {
+      "slug": "la-fenetre",
+      "title": "La fenêtre",
+      "description": "Une fenêtre ouverte sur un paysage en aplats : une maison jaune, un cheval bleu, des silhouettes allongées dans l'herbe.",
+      "tags": [
+        "paysages"
+      ],
+      "image": "fenetre",
+      "w": 1600,
+      "h": 1200,
+      "insitu": "la-fenetre"
+    },
+    {
+      "slug": "la-queue-de-cheval",
+      "title": "La queue de cheval",
+      "description": "Au crayon : un profil de femme, les cheveux tirés en haute queue de cheval, un col de fourrure.",
+      "tags": [
+        "portraits",
+        "dessins"
+      ],
+      "image": "la-queue-de-cheval",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "la-queue-de-cheval"
+    },
+    {
+      "slug": "les-cabines",
+      "title": "Les cabines de plage",
+      "description": "Des cabines rayées, des silhouettes longilignes en maillots rayés, des voiles au loin.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "les-cabines",
+      "w": 1600,
+      "h": 1195,
+      "insitu": "les-cabines"
+    },
+    {
+      "slug": "chapeau-rouge",
+      "title": "Le chapeau rouge",
+      "description": "Un chapeau rouge à pois, deux nattes nouées de rubans verts et un col jaune. Le premier d'une série de quatre portraits accrochés côte à côte.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "chapeau-rouge",
+      "w": 1200,
+      "h": 1600,
+      "insitu": "chapeau-rouge"
+    },
+    {
+      "slug": "le-soleil-jaune",
+      "title": "Le soleil jaune",
+      "description": "Un grand soleil pâle et deux nuages au-dessus d'une mer bleu profond, une plage jaune qui s'avance en pointe. Trois couleurs, pas une de plus.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "le-soleil-jaune",
+      "w": 1143,
+      "h": 1600,
+      "insitu": "le-soleil-jaune"
+    },
+    {
+      "slug": "la-crique",
+      "title": "La crique",
+      "description": "Une maison blanche au-dessus d'une crique, une plage en arc de cercle et une barque rouge.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "la-crique",
+      "w": 1600,
+      "h": 1195,
+      "insitu": "la-crique"
+    },
+    {
+      "slug": "deux-visages",
+      "title": "Deux visages",
+      "description": "Au crayon : deux profils qui se font face, des fleurs dans les cheveux, un papillon entre les deux.",
+      "tags": [
+        "portraits",
+        "dessins"
+      ],
+      "image": "deux-visages",
+      "w": 1600,
+      "h": 1195,
+      "insitu": "deux-visages"
+    },
+    {
+      "slug": "la-poupee",
+      "title": "La poupée",
+      "description": "Une petite fille au chignon noir et aux joues rondes, en robe noire et rouge, de grosses boucles d'oreilles rouges.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "la-poupee",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "la-poupee"
+    },
+    {
+      "slug": "sur-la-plage",
+      "title": "Sur la plage",
+      "description": "Deux vieux amoureux assis face à la mer, bâtons de marche à la main, elle en robe à pois, lui en short rouge.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "sur-la-plage",
+      "w": 1600,
+      "h": 910,
+      "insitu": "sur-la-plage"
+    },
+    {
+      "slug": "le-chignon",
+      "title": "Le chignon",
+      "description": "Au crayon : une femme au chignon tressé, une boucle d'oreille, le regard tourné, une toupie posée à côté.",
+      "tags": [
+        "portraits",
+        "dessins"
+      ],
+      "image": "le-chignon",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "le-chignon"
+    },
+    {
+      "slug": "les-ombrelles",
+      "title": "Les ombrelles",
+      "description": "Quatre femmes en robes à motifs sous leurs ombrelles, qui marchent sur une plage découpée en bandes jaune et bleue.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "les-ombrelles",
+      "w": 1600,
+      "h": 1195,
+      "insitu": "les-ombrelles"
+    },
+    {
+      "slug": "couronne-de-fleurs",
+      "title": "La couronne de fleurs",
+      "description": "Des fleurs piquées dans de longs cheveux noirs, un haut bleu, un regard qui ne cille pas. Deuxième portrait de la série.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "couronne-de-fleurs",
+      "w": 1200,
+      "h": 1600,
+      "insitu": "couronne-de-fleurs"
+    },
+    {
+      "slug": "le-voilier",
+      "title": "Le voilier",
+      "description": "Une grande voile blanche gonflée sur une mer bleu profond, une coque rouge.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "le-voilier",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "le-voilier"
+    },
+    {
+      "slug": "bois-brincon",
+      "title": "Bois Brinçon",
+      "description": "Les rangs de vigne du Bois Brinçon, un grand arbre nu au premier plan et le château au bout de l'allée.",
+      "tags": [
+        "paysages"
+      ],
+      "image": "bois-brincon",
+      "w": 1600,
+      "h": 1200,
+      "insitu": "bois-brincon"
+    },
+    {
+      "slug": "la-chevelure-rouge",
+      "title": "La chevelure rouge",
+      "description": "De longs cheveux rouges, des fleurs à l'oreille, une robe bleue à fleurs blanches, et un filet rouge tracé tout autour.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "la-chevelure-rouge",
+      "w": 1251,
+      "h": 1600,
+      "insitu": "la-chevelure-rouge"
+    },
+    {
+      "slug": "la-casquette",
+      "title": "La casquette",
+      "description": "Au crayon : un portrait de jeune femme à la casquette, le regard de côté, cerné d'un halo.",
+      "tags": [
+        "portraits",
+        "dessins"
+      ],
+      "image": "la-casquette",
+      "w": 1002,
+      "h": 1600,
+      "insitu": "la-casquette"
+    },
+    {
+      "slug": "les-amoureux",
+      "title": "Les amoureux",
+      "description": "Deux chapeaux, un rouge et un rose, vus de dos devant la mer, un soleil orange qui se couche.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "les-amoureux",
+      "w": 1600,
+      "h": 1309,
+      "insitu": "les-amoureux"
+    },
+    {
+      "slug": "turban-bleu",
+      "title": "Le turban bleu",
+      "description": "Un turban à motifs, une cascade de plumes colorées sur l'épaule et un collier de perles noires. Troisième portrait de la série.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "turban-bleu",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "turban-bleu"
+    },
+    {
+      "slug": "cercles",
+      "title": "Cercles",
+      "description": "Des disques concentriques, rouges, bleus, verts, jaunes, qui se chevauchent sur un fond clair.",
+      "tags": [
+        "abstraits"
+      ],
+      "image": "cercles",
+      "w": 1600,
+      "h": 1195,
+      "insitu": "cercles"
+    },
+    {
+      "slug": "la-fille-au-chapeau",
+      "title": "La fille au chapeau",
+      "description": "Au crayon : une petite fille assise, de dos, sous un grand chapeau, en robe à pois.",
+      "tags": [
+        "portraits",
+        "dessins"
+      ],
+      "image": "la-fille-au-chapeau",
+      "w": 1140,
+      "h": 1600,
+      "insitu": "la-fille-au-chapeau"
+    },
+    {
+      "slug": "la-piscine",
+      "title": "La piscine",
+      "description": "Une piscine bleue sous une pergola jaune et rose, un palmier, deux transats. Pas un bruit.",
+      "tags": [
+        "paysages"
+      ],
+      "image": "la-piscine",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "la-piscine"
+    },
+    {
+      "slug": "les-barques",
+      "title": "Les barques",
+      "description": "Deux barques rouge, verte et jaune sur une mer bleue, deux nuages blancs.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "les-barques",
+      "w": 1600,
+      "h": 1394,
+      "insitu": "les-barques"
+    },
+    {
+      "slug": "le-beret-rouge",
+      "title": "Le béret rouge",
+      "description": "Un visage au béret rouge et au manteau orange, sur un fond vert franc.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "le-beret-rouge",
+      "w": 1068,
+      "h": 1600,
+      "insitu": "le-beret-rouge"
+    },
+    {
+      "slug": "cabines-sous-les-arbres",
+      "title": "Les cabines sous les arbres",
+      "description": "Des cabines blanches aux toits bruns sous de grands arbres ronds, une mer verte, deux petites voiles au loin.",
+      "tags": [
+        "bord-de-mer"
+      ],
+      "image": "cabines-sous-les-arbres",
+      "w": 1319,
+      "h": 1600,
+      "insitu": "cabines-sous-les-arbres"
+    },
+    {
+      "slug": "la-robe-rayee",
+      "title": "La robe rayée",
+      "description": "Une petite fille en robe rayée rouge et blanc, les bras grands ouverts, sur fond blanc.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "robe-rayee",
+      "w": 1600,
+      "h": 1200,
+      "insitu": "la-robe-rayee"
+    },
+    {
+      "slug": "les-carres",
+      "title": "Les carrés",
+      "description": "Des carrés et des rectangles qui se superposent, bleus, orange, jaunes, rouges, verts, autour d'un carré clair au centre. Le pendant des Cercles.",
+      "tags": [
+        "abstraits"
+      ],
+      "image": "les-carres",
+      "w": 1133,
+      "h": 1600,
+      "insitu": "les-carres"
+    },
+    {
+      "slug": "portrait-d-enfant",
+      "title": "Portrait d'enfant",
+      "description": "Au crayon : un visage d'enfant de face, cheveux raides, grands yeux clairs.",
+      "tags": [
+        "portraits",
+        "dessins"
+      ],
+      "image": "portrait-d-enfant",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "portrait-d-enfant"
+    },
+    {
+      "slug": "le-banc-rouge",
+      "title": "Le banc rouge",
+      "description": "Un banc rouge et jaune sur le quai, une échelle de bain, et le soleil qui descend derrière les montagnes, de l'autre côté du lac.",
+      "tags": [
+        "paysages"
+      ],
+      "image": "le-banc-rouge",
+      "w": 1206,
+      "h": 1600,
+      "insitu": "le-banc-rouge"
+    },
+    {
+      "slug": "la-capeline-rouge",
+      "title": "La capeline rouge",
+      "description": "Une femme sous une grande capeline rouge, le visage à demi caché, un collier de perles sur l'épaule.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "la-capeline-rouge",
+      "w": 1578,
+      "h": 1600,
+      "insitu": "la-capeline-rouge"
+    },
+    {
+      "slug": "soleil-levant",
+      "title": "Soleil levant",
+      "description": "Un disque rouge sur un ciel crème, des collines bleues et roses, une montagne noire en papier découpé. Un air d'estampe japonaise.",
+      "tags": [
+        "paysages"
+      ],
+      "image": "soleil-levant",
+      "w": 1181,
+      "h": 1600,
+      "insitu": "soleil-levant"
+    },
+    {
+      "slug": "chapeau-jaune",
+      "title": "Le chapeau jaune",
+      "description": "Une grande capeline jaune, une natte tressée de rubans et un pull à rayures vertes. Dernier portrait de la série des quatre.",
+      "tags": [
+        "portraits"
+      ],
+      "image": "chapeau-jaune",
+      "w": 1200,
+      "h": 1600,
+      "insitu": "chapeau-jaune"
+    },
+    {
+      "slug": "les-rythmes",
+      "title": "Les rythmes",
+      "description": "Des disques et des anneaux qui se chevauchent, du bleu au jaune en passant par le rouge et le rose. Dans l'esprit des rythmes de Delaunay.",
+      "tags": [
+        "abstraits"
+      ],
+      "image": "les-rythmes",
+      "w": 1195,
+      "h": 1600,
+      "insitu": "les-rythmes"
+    },
+    {
+      "slug": "la-fleur-rose",
+      "title": "La fleur rose",
+      "description": "Un vase bleu, une grande fleur rose et quelques tiges, traités en couleurs douces, presque transparentes.",
+      "tags": [
+        "natures-mortes"
+      ],
+      "image": "fleur-rose",
+      "w": 1281,
+      "h": 1600,
+      "insitu": "la-fleur-rose"
+    },
+    {
+      "slug": "nature-morte-au-pichet",
+      "title": "Nature morte au pichet",
+      "description": "Un pichet brun, un citron jaune et un citron vert sur un drapé bleu plié en grands pans.",
+      "tags": [
+        "natures-mortes"
+      ],
+      "image": "nature-morte-bleue",
+      "w": 1200,
+      "h": 1600,
+      "insitu": "nature-morte-au-pichet"
+    },
+    {
+      "slug": "nature-morte-au-vase-bleu",
+      "title": "Nature morte au vase bleu",
+      "description": "Un vase bleu et deux fruits sur une nappe orange, devant un rideau rouge. Le pendant de la nature morte au pichet.",
+      "tags": [
+        "natures-mortes"
+      ],
+      "image": "nature-morte-orange",
+      "w": 1200,
+      "h": 1600,
+      "insitu": "nature-morte-au-vase-bleu"
+    }
+  ]
+}

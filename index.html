@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Christian Cailleau — Les tableaux</title>
+  <meta name="description" content="Les tableaux de Christian Cailleau, peints pour sa famille.">
+  <meta name="theme-color" content="#f3efee">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231b1a1a'/%3E%3Ctext x='16' y='22.5' font-family='Helvetica,Arial,sans-serif' font-size='19' font-weight='600' fill='%23f3efee' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <!-- ?v= : à changer après chaque modification du CSS ou du JS, sinon les téléphones gardent l'ancienne version en cache -->
+  <link rel="stylesheet" href="assets/styles.css?v=20261030b">
+  <script defer src="https://unpkg.com/vue@3.5.13/dist/vue.global.prod.js"></script>
+  <script defer src="js/app.js?v=20261030b"></script>
+</head>
+<body>
+
+  <div id="app" v-cloak>
+  <div class="app" :class="{ 'is-detail': route.name === 'detail' }">
+
+    <site-header :active="route.name"></site-header>
+
+    <main class="views">
+      <transition name="page" :duration="{ enter: 900, leave: 260 }" @before-leave="beforeLeave">
+        <component :is="viewComponent" :key="route.name" :route="route"></component>
+      </transition>
+    </main>
+
+    <transition name="lb">
+      <div v-if="store.lightbox" class="lightbox" @click="store.lightbox = null" role="dialog" aria-modal="true" :aria-label="store.lightbox.title">
+        <img :src="imgSrc(store.lightbox)" :alt="store.lightbox.title" :width="store.lightbox.w" :height="store.lightbox.h">
+        <button type="button" class="lightbox-close" @click.stop="store.lightbox = null">Fermer</button>
+      </div>
+    </transition>
+
+    <div v-if="store.error" class="notice">
+      <p><strong>Les tableaux ne se chargent pas.</strong> Le site doit être ouvert depuis un serveur local, pas en double-cliquant sur le fichier.</p>
+      <pre>cd Vitrine_Cailleau_Christian
+python3 -m http.server 8080</pre>
+      <p>Puis ouvrir <a href="http://localhost:8080">http://localhost:8080</a>.</p>
+    </div>
+
+  </div>
+  </div>
+
+  <!-- ============ En-tête (galerie + à propos) ============ -->
+  <script type="text/x-template" id="tpl-header">
+    <header class="site-header">
+      <p class="bio">
+        <strong>Christian Cailleau</strong> est un artiste peintre basé à Cholet qui aime peindre des tableaux pour sa famille : ses enfants, ses petits-enfants et, plus récemment, ses arrière-petits-enfants.
+      </p>
+      <nav class="seg" ref="nav" aria-label="Navigation principale">
+        <a href="#/" :class="{ on: navActive === 'gallery' }" :aria-current="navActive === 'gallery' ? 'page' : null">Les tableaux</a>
+        <a href="#/a-propos" :class="{ on: navActive === 'about' }" :aria-current="navActive === 'about' ? 'page' : null">À propos</a>
+        <!-- copie « active » des liens, découpée sur l'onglet courant : le noir glisse d'un onglet à l'autre -->
+        <div class="seg-on" :style="clipStyle" aria-hidden="true">
+          <a href="#/" tabindex="-1">Les tableaux</a>
+          <a href="#/a-propos" tabindex="-1">À propos</a>
+        </div>
+      </nav>
+    </header>
+  </script>
+
+  <!-- ============ Galerie ============ -->
+  <script type="text/x-template" id="tpl-gallery">
+    <section class="view view-gallery" :class="{ 'is-fresh': fresh }" ref="view">
+      <!-- tri par catégorie (les catégories et les tags viennent de paintings.json) -->
+      <nav class="filters" ref="filtersEl" aria-label="Catégories" v-if="store.loaded && filters.length > 1">
+        <button v-for="c in filters" :key="c.id" type="button" class="filter"
+                :class="{ on: store.filter === c.id }" :aria-pressed="store.filter === c.id"
+                @click="setFilter(c.id)">{{ c.label }}<span class="filter-n">{{ c.n }}</span></button>
+        <span class="filter-bar" :style="fbarStyle" aria-hidden="true"></span>
+      </nav>
+      <div class="track" ref="track"
+           @pointerdown="onDown" @pointermove="onMove" @pointerup="onUp" @pointercancel="onUp">
+        <!-- transition-group : quand on change de catégorie, les tableaux glissent vers leur nouvelle place -->
+        <transition-group v-if="store.loaded" tag="ul" class="strip" name="grid" @before-leave="holdPlace">
+          <li v-for="(p, i) in visible" :key="p.slug" class="item"
+              :style="{ '--dy': offset(i) + 'px', '--i': i }">
+            <a class="item-link" :href="'#/tableau/' + p.slug" @click="onPick($event, p)" @pointerenter="preload(p)" draggable="false">
+              <!-- carte grise uniforme (4:5) ; la feuille garde les proportions du tableau -->
+              <span class="card">
+                <span class="sheet" :style="sheetStyle(p)">
+                  <img class="painting" :data-slug="p.slug"
+                       :src="imgSrc(p, 800)" :srcset="imgSet(p)"
+                       sizes="(max-width: 759px) 86vw, 17vw"
+                       :alt="p.title" :width="p.w" :height="p.h"
+                       :loading="i < 6 ? 'eager' : 'lazy'" decoding="async" draggable="false">
+                </span>
+              </span>
+              <span class="caption">{{ p.title }}</span>
+            </a>
+          </li>
+        </transition-group>
+      </div>
+      <div class="strip-footer" v-if="store.loaded && visible.length">
+        <div class="progress" aria-hidden="true">
+          <span class="progress-bar" :style="barStyle"></span>
+        </div>
+        <p class="counter"><span>{{ progress.index }}</span><span class="counter-sep">/</span><span>{{ visible.length }}</span></p>
+      </div>
+    </section>
+  </script>
+
+  <!-- ============ Fiche d'un tableau ============ -->
+  <script type="text/x-template" id="tpl-detail">
+    <article class="view view-detail" v-if="store.loaded"
+             @touchstart.passive="onTouchStart" @touchend.passive="onTouchEnd" @touchcancel.passive="onTouchCancel">
+      <template v-if="p">
+        <div class="detail-left">
+          <div class="detail-top">
+            <a href="#/" class="back">← Les tableaux</a>
+          </div>
+
+          <div class="detail-body">
+            <transition :name="swapName" mode="out-in">
+              <p class="detail-text" :key="p.slug">{{ p.description }}</p>
+            </transition>
+          </div>
+
+          <div class="detail-meta">
+            <transition :name="swapName" mode="out-in">
+              <div class="detail-heading" :key="p.slug">
+                <p class="detail-cat" v-if="cats">{{ cats }}</p>
+                <h1 class="detail-title">{{ p.title }}</h1>
+              </div>
+            </transition>
+          </div>
+
+          <!-- précédent / suivant restent dans la catégorie choisie sur la page d'accueil (grand écran) -->
+          <nav class="pager" aria-label="Tableau précédent ou suivant">
+            <a :href="'#/tableau/' + prev.slug" rel="prev">← Précédent</a>
+            <span class="pager-index">{{ index + 1 }} / {{ total }}</span>
+            <a :href="'#/tableau/' + next.slug" rel="next">Suivant →</a>
+          </nav>
+        </div>
+
+        <div class="detail-right">
+          <!-- le tableau en entier, posé sur le mur gris -->
+          <div class="piece-panel" ref="panel">
+            <transition :name="swapName">
+              <button type="button" class="piece" :key="p.slug" :style="pieceStyle"
+                      @click="openLightbox" :aria-label="'Voir ' + p.title + ' en grand'">
+                <img class="painting" :data-slug="p.slug"
+                     :src="imgSrc(p, 800)" :srcset="imgSet(p)"
+                     sizes="(max-width: 899px) 90vw, 40vw"
+                     :alt="p.title" :width="p.w" :height="p.h" decoding="async">
+              </button>
+            </transition>
+          </div>
+
+          <!-- le tableau en situation -->
+          <figure class="insitu">
+            <transition name="fade">
+              <img v-if="p.insitu" :key="p.slug"
+                   :src="insituSrc(p.insitu, 1000)" :srcset="insituSet(p.insitu)"
+                   sizes="(max-width: 899px) 100vw, 44vw"
+                   :alt="p.title + ', en situation'" decoding="async">
+              <div v-else :key="p.slug + '-wall'" class="wall">
+                <img :src="imgSrc(p, 800)" :srcset="imgSet(p)" sizes="20vw" :alt="p.title + ', accroché'" :width="p.w" :height="p.h">
+              </div>
+            </transition>
+          </figure>
+        </div>
+
+        <!-- petit écran : barre de navigation fixe en bas, comme dans une app (icône + libellé, sous le pouce).
+             On peut aussi balayer la page vers la gauche (suivant) ou la droite (précédent). -->
+        <nav class="detail-bar" aria-label="Navigation entre les tableaux">
+          <a href="#/" class="bar-item">
+            <svg class="bar-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.75" y="3.75" width="6.5" height="6.5"/><rect x="13.75" y="3.75" width="6.5" height="6.5"/><rect x="3.75" y="13.75" width="6.5" height="6.5"/><rect x="13.75" y="13.75" width="6.5" height="6.5"/></svg>
+            <span>Tableaux</span>
+          </a>
+          <a :href="'#/tableau/' + prev.slug" class="bar-item" :aria-label="'Précédent : ' + prev.title">
+            <svg class="bar-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg>
+            <span>Précédent</span>
+          </a>
+          <span class="bar-count"><span>{{ index + 1 }}</span><span class="bar-sep">/</span><span>{{ total }}</span></span>
+          <a :href="'#/tableau/' + next.slug" class="bar-item" :aria-label="'Suivant : ' + next.title">
+            <svg class="bar-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></svg>
+            <span>Suivant</span>
+          </a>
+        </nav>
+      </template>
+
+      <div v-else class="detail-empty">
+        <p>Ce tableau n'existe pas, ou plus.</p>
+        <a href="#/" class="back">← Les tableaux</a>
+      </div>
+    </article>
+  </script>
+
+  <!-- ============ À propos ============ -->
+  <script type="text/x-template" id="tpl-about">
+    <section class="view view-about" ref="root">
+
+      <div class="about-block about-center">
+        <figure class="photo reveal" style="--ar: 3 / 2">
+          <img :src="photoSrc('IMG_5486', 1000)" :srcset="photoSet('IMG_5486')" sizes="(max-width: 759px) 100vw, 70vw"
+               style="object-position: 50% 30%" alt="L'atelier : la table à dessin, les pinceaux et des tableaux au mur" width="1500" height="2000">
+        </figure>
+        <p class="about-text reveal">
+          <strong>Christian Cailleau</strong> a toujours aimé dessiner. Pendant les vacances, ses enfants puis ses petits-enfants dessinaient beaucoup avec lui. Il dessinait vraiment bien.
+        </p>
+      </div>
+
+      <div class="about-block about-split">
+        <figure class="photo reveal" style="--ar: 3 / 2">
+          <img :src="photoSrc('IMG_5489', 1000)" :srcset="photoSet('IMG_5489')" sizes="(max-width: 759px) 100vw, 60vw"
+               style="object-position: 50% 42%" alt="Christian dans son atelier, un tableau encadré dans les mains" width="1500" height="2000">
+        </figure>
+        <p class="about-text reveal">
+          Depuis sa retraite, il a repris des cours de dessin et s'est mis à la peinture. Il travaille dans un petit atelier installé dans une chambre, sous les toits. Il a peint une trentaine de tableaux.
+        </p>
+      </div>
+
+      <div class="about-block about-split reverse">
+        <p class="about-text reveal">
+          Chaque tableau a une destination : les murs de l'appartement de Pornichet, ou la maison d'un enfant, d'un petit-enfant, et maintenant d'un arrière-petit-enfant.
+        </p>
+        <figure class="photo reveal" style="--ar: 4 / 5">
+          <img :src="photoSrc('IMG_3303', 1000)" :srcset="photoSet('IMG_3303')" sizes="(max-width: 759px) 100vw, 60vw"
+               style="object-position: 50% 50%" alt="Quatre portraits encadrés, accrochés côte à côte sur un mur" width="1500" height="2000">
+        </figure>
+      </div>
+
+      <div class="about-block about-pair">
+        <figure class="photo reveal" style="--ar: 4 / 5">
+          <img :src="photoSrc('IMG_5487', 1000)" :srcset="photoSet('IMG_5487')" sizes="(max-width: 759px) 100vw, 45vw"
+               style="object-position: 50% 60%" alt="La table de l'atelier, un tableau encadré posé dessus" width="1500" height="2000">
+        </figure>
+        <figure class="photo reveal" style="--ar: 4 / 5">
+          <img :src="photoSrc('IMG_5491', 1000)" :srcset="photoSet('IMG_5491')" sizes="(max-width: 759px) 100vw, 45vw"
+               style="object-position: 55% 55%" alt="Deux mains tiennent un portrait encadré" width="1500" height="2000">
+        </figure>
+      </div>
+
+      <footer class="about-footer">
+        <p>Un site fait par son petit-fils, Maxence.</p>
+        <p>© {{ year }} Christian Cailleau</p>
+      </footer>
+    </section>
+  </script>
+
+</body>
+</html>
